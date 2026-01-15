@@ -1,0 +1,6 @@
+path: C:\Users\barte\OCR_Project\preprocessed_data
+train: images/train
+val: images/val
+nc: 1
+names:
+- plate
