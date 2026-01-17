@@ -1,10 +1,12 @@
 import pika
 
-QUEUE = "plate_jobs"
+RABBITMQ_HOST = "rabbitmq"
+QUEUE = "plates"
+
 
 def enqueue_image(image_bytes: bytes):
     conn = pika.BlockingConnection(
-        pika.ConnectionParameters("localhost")
+        pika.ConnectionParameters(RABBITMQ_HOST)
     )
     ch = conn.channel()
     ch.queue_declare(queue=QUEUE, durable=True)
@@ -12,7 +14,7 @@ def enqueue_image(image_bytes: bytes):
     ch.basic_publish(
         exchange="",
         routing_key=QUEUE,
-        body=image_bytes
+        body=image_bytes,
     )
 
     conn.close()
